@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue T</title>
+    <script src="https://unpkg.com/vue@3.0.2"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/vue@3.0.2/dist/vue.js"></script> -->
+    <style>
+      body{
+      background: #eee;
+      max-width: 960px;
+      margin: 20px auto;
+    }
+    p, h3, ul{
+      margin: 0;
+      padding: 0;
+    }
+    li{
+      list-style-type: none;
+      background: #fff;
+      margin: 20px auto;
+      padding: 10px 20px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    li.fav{
+      background: #a89eff;
+      color: white;
+    }
+        .box {
+            padding: 100px 0;
+            width: 400px;
+            text-align: center;
+            background: #ddd;
+            margin: 20px;
+            display: inline-block;
+        }
+
+
+        
+    </style>
+</head>
+<body>
+    <h1>hello vue :)</h1>
+
+
+    <div id="app">
+
+        <!-- attribute binding -->
+        <a v-bind:href="url"> go to google </a>
+        <!-- shorthand to bind -->
+        <a :href="url"> go to google </a>
+        
+
+
+
+        <div v-if="showBooks">
+        <h2>
+            {{ books[0].title }} - {{books[0].age}} - {{books[0].author}}
+        </h2>
+        </div>
+        <div v-if="showBooks">
+            <ul>
+                <!-- first action in array your cycling through  -->
+                <li v-for="item in books" v-bind:class="{ fav: item.isFav }">
+                    <img :src="item.img" :alt="item.title"/>
+                    <h4>{{item.title}} </h4>
+                    <p> {{item.author}} </p>
+                    <button @click="changeFavStat(item)">
+                        <span v-if="!item.isFav"> Update to Favorite </span>
+                        <span v-if="item.isFav"> Remove From Favs </span>
+                    </button>
+                </li>
+            </ul>
+            <ul>
+                <!-- first action in array your cycling through  -->
+                <li v-for="item in filteredBooks" v-bind:class="{ fav: item.isFav }">
+                    <img :src="item.img" :alt="item.title"/>
+                    <h4>{{item.title}} </h4>
+                    <p> {{item.author}} </p>
+                    <button @click="changeFavStat(item)">
+                        <span v-if="!item.isFav"> Update to Favorite </span>
+                        <span v-if="item.isFav"> Remove From Favs </span>
+                    </button>
+                </li>
+            </ul>
+        </div>
+            <br>
+            <!-- directive mailny event colon type-->
+            <!-- do not curly braces inside directive properties only when mounting to dom -->
+            <button v-on:click="age++"> increase age </button>
+            <button v-on:click="age--"> decrease age </button>
+
+            <br>
+            <!-- @event shortcut to v-on -->
+            <div @click="changeTitle('Oath')"> change title </div>
+
+            <br>
+
+            <button @click="toggleShowBooks">
+                <span v-if="showBooks"> Hide Books</span>
+                <span v-else> Show Books</span>
+            </button>
+
+            <!-- v show is using css to display show and hide instead of conditionally rending to dom-->
+            <!-- to add to dom is more time consuming/expensive than hide/show css if there is something that will apperar often like links/dropdown for performance it makes more sense to use vshow -->
+            <div v-show="showBooks"> currently showing books</div>
+
+
+            <!-- mouse events -->
+
+            <!-- to keep the event object in an event ($event, secondArg)  -->
+            <div class="box" v-on:mouseover="handleEvent($event, 5)">mouseover (enter)</div>
+            <div class="box" @mouseleave="handleEvent">mouseleave</div>
+            <div class="box" @dblclick="handleEvent">doubl click</div>
+            <div class="box" @mousemove="handleMousemove"> position- {{x}}, {{y}}</div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
