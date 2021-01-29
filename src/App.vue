@@ -3,7 +3,7 @@
 <h1> {{ title }} </h1>
 <div v-if="showModal"> 
  <!-- prop drive :header="header" :text="text" -->
-<Modal theme="sales" @close="toggleModal">
+<Modal theme="sale" @close="toggleModal">
   <template v-slot:links>
     <a href="#"> sign up</a>
 
@@ -14,8 +14,16 @@
   
 </Modal>>
 </div>
+  <teleport to=".modals" v-if="showModalTwo">
+    <Modal @close="toggleModalTwo">
+      <h1>Sign up to the Newsletter</h1>
+      <p>For updates and promo codes!</p>
+    </Modal>
+  </teleport>
+
 <br>
 <button @click.alt="toggleModal"> show modal (alt) </button>
+<button @click="toggleModalTwo">open modal 2</button>
 </div>
 </template>
 
@@ -31,19 +39,23 @@ export default {
       title: 'Vue App',
       header:"Woo header",
       text: "Prop driving the prop attribute",
-      showModal: false
+      showModal: false,
+      showModalTwo: false,
     }
   },
   methods: {
     toggleModal(){
     this.showModal = !this.showModal
-  }
+  },
+  toggleModalTwo() {
+      this.showModalTwo = !this.showModalTwo
+    }
   }
 }
 </script>
 
 <style>
-#app {
+#app, .modals {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
